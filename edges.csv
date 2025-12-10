@@ -1,0 +1,46 @@
+source;target;kind;labels;motivation
+Task dispatch to move KK to EXCH;Move finished KK to EXCH;functional;deliverable;Task must be made before it can be done
+Move finished KK to EXCH;Decouple finished KK;functional;deliverable;KK must be moved to EXCH before it can be decoupled
+Arrival of empty KKs;Scan incoming KK to check it in;functional;deliverable;KK must have arrived before it can be scanned
+Scan incoming KK to check it in;Move checked-in KKs to STOR;functional;deliverable;KK must have been checked in before it can be moved to STOR
+Move finished KK to EXCH;Lowpads (robots);functional;task,physical,data;Lowpads move the KKs to EXCH
+Move finished KK to EXCH;KK (OutputCart);functional;physical;KKs are moved by Lowpads
+Decouple finished KK;Lowpads (robots);functional;physical,data;Lowpads arrive at EXCH and Check KK out of WMS and into Florisoft
+Decouple finished KK;KK (OutputCart);functional;physical;KK arrives at EXCH
+Decouple finished KK;EXCH (In/Output Positions / Checking System);functional;physical;Lowpad arrives at EXCH
+Arrival of empty KKs;KK (OutputCart);functional;physical;Empty KKs arrive
+Arrival of empty KKs;EXCH (In/Output Positions / Checking System);functional;physical;Empty KKs are checked in at EXCH
+Scan incoming KK to check it in;KK (OutputCart);functional;data;Barcode of KK is scanned to check it in
+Scan incoming KK to check it in;Mobile Terminal;functional;data;Mobile terminal scans inbound KKs to check them in
+Move checked-in KKs to STOR;Lowpads (robots);functional;task,physical,data;Lowpads move the KKs to STOR
+Move checked-in KKs to STOR;KK (OutputCart);functional;physical;KKs are moved by Lowpads
+Task dispatch to move KK to EXCH;Job Creator;functional;data;Job creator creates the task
+Task dispatch to move KK to EXCH;Job Dispatcher;functional;data;Job dispatcher dispatches the task
+Task dispatch to move KK to EXCH;Actemium Data Notifier;functional;data;Job dispatcher communicates with Lowpad communicator via Data notifier
+Task dispatch to move KK to EXCH;Actemium Lowpad Communicator;functional;data;Lowpad communicator communicates task to Fleet manager
+Move finished KK to EXCH;Fleet Manager;functional;data,task;Fleet Manager communicates task to and from Lowpad
+Move finished KK to EXCH;Actemium Lowpad Communicator;functional;data;Lowpad communicator communicates progress of task to job watcher
+Move finished KK to EXCH;Actemium Data Notifier;functional;data;Lowpad communicator communicates with Job watcher via Data notifier
+Move finished KK to EXCH;Job Watcher;functional;data;Job watcher tracks progress of task
+Decouple finished KK;Fleet Manager;functional;data;Fleet Manager communicates that Lowpad has finished the task
+Decouple finished KK;Actemium Lowpad Communicator;functional;data;Lowpad communicator communicates finished task to the Job watcher
+Decouple finished KK;Job Watcher;functional;data;Job Watcher communicates finished task to the system
+Decouple finished KK;Actemium Data Notifier;functional;data;Modules communicate via Data notifier
+Decouple finished KK;Host Communicator;functional;data;Host communicator receives finished task data and sends it to Florisoft
+Decouple finished KK;Florisoft;functional;data;Florisoft receives finished KK data
+Decouple finished KK;Real-Time Database;functional;data;Database updates KKs locations to [EXT.OUT]
+Decouple finished KK;Historical Database;functional;data;KK is removed from Real-Time database and moved to historical one
+Scan incoming KK to check it in;Empty Container to Infeed;functional;data;This function on the mobile terminal is used to check in a KK
+Scan incoming KK to check it in;WMS/WCS API & BarcodeHandler API;functional;data;Mobile client communicates checked-in KK data via Mobile API
+Scan incoming KK to check it in;Actemium Data Notifier;functional;data;The API communicates with the other modules via the Data notifier
+Scan incoming KK to check it in;Real-Time Database;functional;data;The database receives the data of the checked-in KK
+Scan incoming KK to check it in;Job Creator;functional;data;The checked-in KK data is sent to the Job creator so it can tell a robot to pick it up
+Scan incoming KK to check it in;Host Communicator;functional;data;The checked-in KK data is sent to the Host communicator to check it into Florisoft
+Scan incoming KK to check it in;Florisoft;functional;data;The Host communicator communicates the checked-in KK data to Florisoft
+Move checked-in KKs to STOR;Job Creator;functional;data;Job creator creates the task
+Move checked-in KKs to STOR;Job Dispatcher;functional;data;Job dispatcher dispatches the task
+Move checked-in KKs to STOR;Actemium Lowpad Communicator;functional;data;Lowpad communicator communicates task to Fleet manager
+Move checked-in KKs to STOR;Fleet Manager;functional;data;Fleet Manager communicates task to and from Lowpad
+Move checked-in KKs to STOR;Actemium Data Notifier;functional;data;Modules communicate via Data notifier
+Move checked-in KKs to STOR;Job Watcher;functional;data;Job watcher tracks progress of task
+Move checked-in KKs to STOR;Real-Time Database;functional;data;When task is done, Job watcher sends KK storage data to Database
