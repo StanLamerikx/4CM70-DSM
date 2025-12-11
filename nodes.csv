@@ -1,24 +1,24 @@
 name;kind
-Arrival of VKs from auction;process
-Flower check-in;process
 Receiving client orders;process
 Receiving KK layout;process
 Receiving inventory allocation;process
+Decide KK workload distribution;process
+Arrival of VKs from auction;process
+Flower check-in (scan VK);process
 Print WMS sticker;process
 Scan printed WMS sticker;process
 Check in scanned LEs into WMS system;process
-Compute distribution of goods over OK/BK/BG;process
 Move LE from VK to OK;process
 Move OKs to OPBW;process
 Check-in of OK at build-up station;process
 Receive sorting instructions;process
-Move KK to OPBW;process
-Show first LE to pick on SF-OPBW;process
+Move first KK from queue at to OPBWxx Sorting Station;process
+Show current LE to pick on SF Overhead Sorting Display;process
 Scan LE in OK;process
 Move LE from OK to KK;process
 Scan KK to confirm;process
-Show next LE to pick on SF-OPBW;process
-Determine KK ready by OPBW;process
+Move KK from STOR to OPBWxx queue;process
+Determine KK ready by SF-OPBW;process
 Task dispatch to move KK to EXCH;process
 Move finished KK to EXCH;process
 Decouple finished KK;process
@@ -42,8 +42,8 @@ LU Move;software
 Empty Container to Infeed;software
 Move Container from Outbound;software
 Add Empty Container;software
-Receiving and distribution;software
-Buildup;software
+SF-RCVG;software
+SF-OPBW;software
 Maintenance Service;software
 Host Communicator;software
 Actemium Service Manager;software
@@ -69,16 +69,19 @@ Job Dispatcher;software
 Job Watcher;software
 Customer Allocation Management;software
 KK is Ready Algorithm;software
+Management Screens;software
 KK (OutputCart);hardware
 VK (InputCart);hardware
 OK (StorageCart);hardware
 Lowpad Charging Station;hardware
 Lowpads (robots);hardware
-EXCH (In/Output Positions / Checking System);hardware
+RCVG (Input Positions);hardware
+EXCH (Output Positions / Checking System);hardware
 Mobile Stations (Checking & Receipts);hardware
 Mobile Terminal;hardware
 OPBWxx Sorting Positions;hardware
-Overhead Sorting Display;hardware
+OPBWxx queue;hardware
+SF Overhead Sorting Display;hardware
 Label Printer (OPBW);hardware
 FingerScanner;hardware
 Label Printer (input);hardware
