@@ -1,11 +1,11 @@
 name;kind
 Receiving client orders;process
 Receiving KK layout;process
-Decide OPBW workload distribution;process
 Arrival of VKs from auction;process
 Print WMS sticker;process
 Scan WMS sticker;process
 Check in LE in VK to WMS system;process
+Decide OPBW workload distribution;process
 Print OK/BK sticker;process
 Distribute OK/BK sticker and LE;process
 Move OKs to OPBW;process
@@ -20,29 +20,34 @@ Determine KK done at SF-OPBW;process
 Determine KK ready by KK is ready algorithm;process
 Determine KK unready by KK is ready algorithm;process
 Move (un)finished KK to STOR;process
+Check-out of OK at OPBW;process
 Move finished KK to EXCH;process
 Decouple finished KK;process
 Arrival of empty KKs;process
 Scan incoming KK to check it in;process
 Move checked-in KKs to STOR;process
+Handling exceptions such as big plants;process
+Merging stations when there are less orders;process
+"Indikken" of OKs;process
+Adding LEs to a new KK when KK has insufficient space;process
 Real-Time Database;software
 Historical Database;software
 Alarms Database;software
-Mobile Screens;software
 SF-RCVG;software
 SF-OPBW;software
+Management Screens;software
+Mobile Screens;software
+WMS/WCS API & BarcodeHandler API;software
 Maintenance Service;software
-Host Communicator;software
 Actemium Service Manager;software
 Actemium Alarms Manager;software
-WMS/WCS API & BarcodeHandler API;software
-Actemium Lowpad Communicator;software
 Actemium Data Notifier;software
-Fleet Manager;software
 Nicelabel Server;software
+Fleet Manager;software
+Actemium Lowpad Communicator;software
 Florisoft;software
+Host Communicator;software
 Host Integration;software
-Management Screens;software
 Job Creator;software
 Job Dispatcher;software
 Job Watcher;software
@@ -51,9 +56,6 @@ KK is Ready Algorithm;software
 KK (OutputCart);hardware
 VK (InputCart);hardware
 OK (StorageCart);hardware
-Lowpads (robots);hardware
-EXCH (Output Positions / Checking System);hardware
-Mobile Terminal;hardware
 RCVG (Input Positions);hardware
 Label Printer (RCVG);hardware
 FingerScanner (RCVG);hardware
@@ -63,5 +65,8 @@ OPBW queue;hardware
 SF-OPBW Screen;hardware
 Label Printer (OPBW);hardware
 FingerScanner (OPBW);hardware
+EXCH (Output Positions / Checking System);hardware
+Mobile Terminal;hardware
+Lowpads (robots);hardware
 LE (Logistical Units BK/BG/OK/KoV);hardware
 Sorting employee;hardware

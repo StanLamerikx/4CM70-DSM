@@ -1,246 +1,259 @@
-source;target;kind;labels;motivation;criticality;Input;TTD;product
-Receiving client orders;Decide OPBW workload distribution;functional;Start-to-Start;After +/- 80% of the order lines are received, OPBW workload distribution can start;low;3;1;3
-Receiving KK layout;Decide OPBW workload distribution;functional;Start-to-Start;After +/- 80% of the KK layouts are received, OPBW workload distribution can start;low;3;1;3
-Arrival of VKs from auction;Print WMS sticker;functional;Finish-to-Start;WMS sticker can only be printed when VK arrives;high;4;4;16
-Print WMS sticker;Scan WMS sticker;functional;Finish-to-Start;WMS sticker can only be scanned when printed;high;4;4;16
-Scan WMS sticker;Check in LE in VK to WMS system;functional;Finish-to-Start;LE's enter Actemium system when WMS sticker is scanned;high;4;4;16
-Check in LE in VK to WMS system;Decide OPBW workload distribution;functional;Finish-to-Start;LE's from VK need to be checked into system to print OK/BK stickers;low;3;2;6
-Decide OPBW workload distribution;Print OK/BK sticker;functional;Finish-to-Start;OK/BK sticker can only be printed if workload distribution is known and thus VK has arrived and its LE's are checked-in;high;4;3;12
-Print OK/BK sticker;Distribute OK/BK sticker and LE;functional;Finish-to-Start;OK/BK stickers need to be printed to distribute LE's from VK to OK;high;4;3;12
-Distribute OK/BK sticker and LE;Move OKs to OPBW;functional;Finish-to-Start;OK/BK need to be in OK to be able to move OK to OPBW;high;4;3;12
-Scan WMS sticker;Receiving client orders;functional;Disable;When the WMS sticker is scanned, no new client order lines can be received;medium;2;4;8
-Scan WMS sticker;Receiving KK layout;functional;Disable;When the WMS sticker is scanned, no new KK layout can be received;medium;2;4;8
-Move OKs to OPBW;Check-in of OK at OPBW;functional;Finish-to-Start;The OK needs to arrive at the OPBW to be checked-in;medium;3;3;9
-Check-in of OK at OPBW;Move KK from STOR to OPBW queue;functional;Start-to-Start;KK is only sent when enough OKs are present at the OPBW;medium;4;2;8
-Move KK from STOR to OPBW queue;Move first KK from queue to OPBW;functional;Start-to-Start;The first KK in line is moved to the OPBW building spot to start building;low;3;2;6
-Move first KK from queue to OPBW;Receive sorting instructions;functional;Finish-to-Start;Sorting instructions can only be received if the KK has arrived at the OPBW building spot;high;4;3;12
-Receive sorting instructions;Scan LE in OK;functional;Finish-to-Start;When the sorting instructions arrive, the first LE can be scanned;high;4;3;12
-Scan LE in OK;Move LE from OK to KK;functional;Finish-to-Start;When the LE is scanned, the LE can be moved from OK to the KK;high;4;4;16
-Move LE from OK to KK;Scan KK to confirm;functional;Finish-to-Start;When the LE is moved, the KK needs to be scanned to confirm;high;4;3;12
-Scan KK to confirm;Determine KK done at SF-OPBW;functional;Finish-to-Start;When the KK is scanned for moving the last LE, the KK is done at this OPBW and the SF-OPBW confirms this if the KK is scanned to confirm;high;4;3;12
-Determine KK done at SF-OPBW;Move (un)finished KK to STOR;functional;Finish-to-Start;When KK is done at OPBW, it is always moved to storage or other OPBW;medium;4;2;8
-Move (un)finished KK to STOR;Determine KK ready by KK is ready algorithm;functional;Finish-to-Start;When KK is moved to STOR, Algorithm decides if KK is fully done and can go to EXCH;low;3;2;6
-Determine KK ready by KK is ready algorithm;Move finished KK to EXCH;functional;Finish-to-Start;When KK is determined ready, it is moved to EXCH;low;3;2;6
-Move finished KK to EXCH;Decouple finished KK;functional;Finish-to-Start;When KK is at EXCH, it is decoupled from the WMS;low;2;2;4
-Determine KK ready by KK is ready algorithm;Determine KK unready by KK is ready algorithm;functional;Finish-to-Start;When KK was ready but order is added to KK, it is again unready;null;2;1;2
-Arrival of empty KKs;Scan incoming KK to check it in;functional;Finish-to-Start;When empty KKs arrive they are manually scanned into the WMS;low;2;2;4
-Scan incoming KK to check it in;Move checked-in KKs to STOR;functional;Finish-to-Start;When empty KKs are scanned into WMS, job can be made to move them to STOR;low;2;2;4
-Receiving client orders;Florisoft;functional;Data Transfer;Florisoft sends the client orders to the system;high;4;4;16
-Receiving client orders;Host Communicator;functional;Data Transfer;Host Communicator receives the client data from Florisoft and sends it to the Database;high;4;3;12
-Receiving client orders;Real-Time Database;functional;Data Write;The Database receives the client data from Florisoft via the Host Communicator;high;4;3;12
-Receiving client orders;SF-RCVG;functional;Visualisation;SF-RCVG client displays the received client orders on the SF-RCVG Screen;;;;
-Receiving KK layout;Florisoft;functional;Data Transfer;Florisoft sends the KK layouts to the system;medium;3;3;9
-Receiving KK layout;Host Communicator;functional;Data Transfer;Host Communicator receives the KK layouts from Florisoft and sends it to the Database;medium;3;3;9
-Receiving KK layout;Real-Time Database;functional;Data Write;The Database receives the KK layouts from Florisoft via the Host Communicator;medium;3;3;9
-Receiving KK layout;SF-RCVG;functional;Visualisation;SF-RCVG client displays the received KK layouts on the SF-RCVG Screen;;;;
-Decide OPBW workload distribution;Host Communicator;functional;Notification;Host Communicator notifies Customer Allocation Management Algorithm that an order has been processed;low;3;2;6
-Decide OPBW workload distribution;Actemium Data Notifier;functional;Notification;Host Communicator sends data notification "OrderProcessed" to Customer Allocation Management Algorithm via Data Notifier;low;2;2;4
-Decide OPBW workload distribution;Customer Allocation Management Algorithm;functional;Logic;The Customer Allocation Management Algorithm calculates the workload distribution;high;4;3;12
-Decide OPBW workload distribution;Real-Time Database;functional;Data Read,Data Write;The Customer Allocation Management Algorithm uses the data from the Database and adds the calculated workload distribution to the Database;high;4;3;12
-Print WMS sticker;Florisoft;functional;Data Transfer,Task;Florisoft tells the Nicelabel Server to print the WMS stickers and supplies the information that should be on them;low;2;2;4
-Print WMS sticker;Nicelabel Server;functional;Task;Nicelabel Server tells Label Printer to print the WMS stickers;low;2;2;4
-Scan WMS sticker;SF-RCVG;functional;Notification,Visualisation;SF-RCVG  notifies the Host Communicator that the WMS sticker has been scanned and shows that the WMS Sticker is scanned on the SF-RCVG Screen;medium;3;3;9
-Scan WMS sticker;Actemium Data Notifier;functional;Notification;SF-RCVG sends the data notification "PartijScannedInWMS" to the Host Communicator via the Data Notifier;low;2;2;4
-Scan WMS sticker;Host Communicator;functional;Notification;Host Communicator receives the notification from SF-RCVG via the Data Notifier;medium;3;3;9
-Check in LE in VK to WMS system;SF-RCVG;functional;Data Transfer,Visualisation;SF-RCVG receives the data from the WMS sticker that the Scanner scans and shows on the SF-RCVG Screen that the LE has been checked in;medium;3;3;9
-Check in LE in VK to WMS system;Real-Time Database;functional;Data Write;Received data from SF-RCVG is added to the Database;high;4;3;12
-Print OK/BK sticker;SF-RCVG;functional;Data Transfer,Task;SF-RCVG tells the Nicelabel Server to print the OK/BK stickers and supplies the information that should be on them;high;4;3;12
-Print OK/BK sticker;Real-Time Database;functional;Data Read;The information that sould be on the OK/BK stickers is taken from the Database;high;4;3;12
-Print OK/BK sticker;Nicelabel Server;functional;Task;Nicelabel Server tells Label Printer to print the OK/BK stickers;high;4;3;12
-Check-in of OK at OPBW;SF-OPBW;functional;Data Transfer,Visualisation;SF-OPBW sends location of checked-in OK from Scanner to Database and shows on the SF-RCVG Screen what location at the OPBW station the OK is checked into;low;3;2;6
-Check-in of OK at OPBW;Real-Time Database;functional;Data Write;Database receives location of checked-in OK;low;3;2;6
-Move KK from STOR to OPBW queue;Real-Time Database;functional;Data Read,Data Write;Locations of LEs, OKs and KKs is taken from the Database to create the job and Job Watcher updates the location of the Lowpad and the KK in the Database;low;3;2;6
-Move KK from STOR to OPBW queue;Job Creator;functional;Logic,Data Transfer,Task;Job Creator creates the job based on the information from the Database;low;2;2;4
-Move KK from STOR to OPBW queue;Job Dispatcher;functional;Logic,Data Transfer,Task;Job Dispatcher dispatches the job created by the Job Creator to a Lowpad based on available information of Lowpads;low;3;2;6
-Move KK from STOR to OPBW queue;Actemium Lowpad Communicator;functional;Data Transfer,Task;Lowpad Communicator communicates the Job to the Fleet Manager and communicates the Job's progress from the Fleet Manager to the Job Watcher;low;3;2;6
-Move KK from STOR to OPBW queue;Fleet Manager;functional;Data Transfer,Task;Fleet Manager communicates the task to the Lowpad and receives the progress from the Lowpad;low;2;2;4
-Move KK from STOR to OPBW queue;Job Watcher;functional;Data Transfer,Notification;Job Watcher receives the progress of the task and sends data notifications "CraneJobCompleted", "CraneJobSend" and "CraneJobStatusUpdated" to update the system on the progress of the job;low;3;2;6
-Move KK from STOR to OPBW queue;Actemium Data Notifier;functional;Notification;Data Notifier sends the data notifications with updates on the job to the system;low;3;2;6
-Move KK from STOR to OPBW queue;SF-OPBW;functional;Notification,Visualisation;SF-OPBW receives the data notifications with updates on the job and notifies the Operator that a KK is coming to the OPBW station through the SF-OPBW Screen;low;3;2;6
-Move first KK from queue to OPBW;Job Watcher;functional;Data Transfer,Notification;Job Watcher keeps track of the job, which is a continuation of the job that sent a Lowpad to the OPBW queue, and keeps the system updated on the progress of the job using data notifications;;;;
-Move first KK from queue to OPBW;Actemium Lowpad Communicator;functional;Data Transfer,Task;Lowpad Communicator communicates the Job to the Fleet Manager and communicates the Job's progress from the Fleet Manager to the Job Watcher;;;;
-Move first KK from queue to OPBW;Fleet Manager;functional;Data Transfer,Task;Fleet Manager communicates the task to the Lowpad and receives the progress from the Lowpad;;;;
-Move first KK from queue to OPBW;Actemium Data Notifier;functional;Notification;Data Notifier sends the data notifications with updates on the job to the system;;;;
-Move first KK from queue to OPBW;SF-OPBW;functional;Notification,Visualisation;SF-OPBW receives the data notifications with updates on the job and notifies the Operator that a KK is going to the active position at the OPBW station through the SF-OPBW Screen;;;;
-Move first KK from queue to OPBW;Real-Time Database;functional;Data Write;Job Watcher updates the location of the Lowpad and the KK in the Database;;;;
-Receive sorting instructions;SF-OPBW;functional;Data Transfer,Visualisation;SF-OPBW takes the sorting instructions from the Database to display on the SF-OPBW Screen;;;;
-Receive sorting instructions;Real-Time Database;functional;Data Read;The sorting instructios are taken from the Database;;;;
-Scan LE in OK;SF-OPBW;functional;Data Transfer,Visualisation;Scanner sends the scanned data to the SF-OPBW client, which displays what has been scanned and how many of it should be moved to the KK;;;;
-Scan KK to confirm;SF-OPBW;functional;Data Transfer,Visualisation;Scanner sends the scanned data to the SF-OPBW client, which updates the displayed sorting instructions;;;;
-Scan KK to confirm;Real-Time Database;functional;Data Write;The scanned item is updated to being added to the KK in the Database;;;;
-Determine KK done at SF-OPBW;SF-OPBW;functional;Data Transfer,Notification;The Operator scans the "Afmelden KK" barcode, after which the SF-OPBW client sends the data notification "KKReleased" via the Data Notifier;;;;
-Determine KK done at SF-OPBW;Actemium Data Notifier;functional;Notification;Data Notifier sends the "KKReleased" data notification to the Job Creator;;;;
-Determine KK done at SF-OPBW;Job Creator;functional;Logic,Data Transfer,Task,Notification;Job Creator receives the "KKReleased" data notification and creates a job for the Lowpad at the active position of the OPBW station to move away;;;;
-Determine KK done at SF-OPBW;Job Dispatcher;functional;Logic,Data Transfer,Task;Job Dispatcher dispatches the job created by the Job Creator to the Lowpad at the active position of the OPBW station;;;;
-Determine KK done at SF-OPBW;Actemium Lowpad Communicator;functional;Data Transfer,Task;Lowpad Communicator communicates the Job to the Fleet Manager and communicates the Job's progress from the Fleet Manager to the Job Watcher;;;;
-Determine KK done at SF-OPBW;Fleet Manager;functional;Data Transfer,Task;Fleet Manager communicates the task to the Lowpad and receives the progress from the Lowpad;;;;
-Determine KK done at SF-OPBW;Job Watcher;functional;Data Transfer;Job Watcher keeps track of the job and updates the location of the relevant Lowpad in the Database;;;;
-Determine KK done at SF-OPBW;Real-Time Database;functional;Data Write;Location of the relevant Lowpad and KK is updated in the Database;;;;
-Determine KK ready by KK is ready algorithm;KK is Ready Algorithm;functional;Logic;KK is Ready Algorithm calculates if the KK released from the OPBW station is ready to go to EXCH;;;;
-Determine KK ready by KK is ready algorithm;Real-Time Database;functional;Data Read,Data Write;Client order, KK layout and current LEs on the KK are used from the Database and conclusion on readiness of the KK is added to the Database;;;;
-Determine KK unready by KK is ready algorithm;KK is Ready Algorithm;functional;Logic;KK is Ready Algorithm calculates if the KK released from the OPBW station is ready to go to EXCH;;;;
-Determine KK unready by KK is ready algorithm;Real-Time Database;functional;Data Read,Data Write;Client order, KK layout and current LEs on the KK are used from the Database and conclusion on readiness of the KK is added to the Database;;;;
-Move (un)finished KK to STOR;Real-Time Database;functional;Data Read,Data Write;The KK being unready is taken from the Database and the location of the Lowpad and the KK is updated in the Database after they have moved;;;;
-Move (un)finished KK to STOR;Job Creator;functional;Logic,Data Transfer,Task;Job Creator creates the job to move the Lowpad to STOR based on the KK's unready status;;;;
-Move (un)finished KK to STOR;Job Dispatcher;functional;Logic,Data Transfer,Task;Job Dispatcher dispatches the job to the Lowpad that has to move to STOR;;;;
-Move (un)finished KK to STOR;Actemium Lowpad Communicator;functional;Data Transfer,Task;Lowpad Communicator communicates the Job to the Fleet Manager and communicates the Job's progress from the Fleet Manager to the Job Watcher;;;;
-Move (un)finished KK to STOR;Fleet Manager;functional;Data Transfer,Task;Fleet Manager communicates the task to the Lowpad and receives the progress from the Lowpad;;;;
-Move (un)finished KK to STOR;Job Watcher;functional;Data Transfer;Job Watcher keeps track of the job and updates the location of the relevant Lowpad and KK in the Database;;;;
-Move finished KK to EXCH;Real-Time Database;functional;Data Read,Data Write;The KK being ready is taken from the Database and the location of the Lowpad and the KK is updated in the Database after they have moved;;;;
-Move finished KK to EXCH;Job Creator;functional;Logic,Data Transfer,Task;Job Creator creates the job to move the Lowpad to EXCH based on the KK's ready status;;;;
-Move finished KK to EXCH;Job Dispatcher;functional;Logic,Data Transfer,Task;Job Dispatcher dispatches the job to the Lowpad that has to move to EXCH;;;;
-Move finished KK to EXCH;Actemium Lowpad Communicator;functional;Data Transfer,Task;Lowpad Communicator communicates the Job to the Fleet Manager and communicates the Job's progress from the Fleet Manager to the Job Watcher;;;;
-Move finished KK to EXCH;Fleet Manager;functional;Data Transfer,Task;Fleet Manager communicates the task to the Lowpad and receives the progress from the Lowpad;;;;
-Move finished KK to EXCH;Job Watcher;functional;Data Transfer;Job Watcher keeps track of the job and updates the location of the relevant Lowpad and KK in the Database;;;;
-Decouple finished KK;Fleet Manager;functional;Data Transfer;Fleet Manager communicates that Lowpad has finished the task;;;;
-Decouple finished KK;Actemium Lowpad Communicator;functional;Data Transfer;Lowpad communicator communicates finished task to the Job Watcher;;;;
-Decouple finished KK;Job Watcher;functional;Data Transfer;Job Watcher communicates finished task to the system;;;;
-Decouple finished KK;Host Communicator;functional;Data Transfer;Host Communicator receives finished task data and sends it to Florisoft;;;;
-Decouple finished KK;Florisoft;functional;Data Transfer;Florisoft receives finished KK data;;;;
-Decouple finished KK;Real-Time Database;functional;Data Write;Database updates KK's location to [EXT.OUT];;;;
-Decouple finished KK;Historical Database;functional;Data Write;KK is removed from Real-Time Database and moved to historical one;;;;
-Scan incoming KK to check it in;Mobile Screens;functional;Data Transfer;The "Empty container to infeed" function on the Mobile Client is used to check in a KK;;;;
-Scan incoming KK to check it in;WMS/WCS API & BarcodeHandler API;functional;Data Transfer;Mobile Client communicates checked-in KK data via Mobile API;;;;
-Scan incoming KK to check it in;Real-Time Database;functional;Data Write;The database receives the data of the checked-in KK;;;;
-Scan incoming KK to check it in;Host Communicator;functional;Data Transfer;The checked-in KK data is sent to the Host Communicator to check it into Florisoft;;;;
-Scan incoming KK to check it in;Florisoft;functional;Data Transfer;The Host Communicator communicates the checked-in KK data to Florisoft;;;;
-Move checked-in KKs to STOR;Job Creator;functional;Logic,Data Transfer,Task;The checked-in KK data is sent to the Job Creator, which creates a job to move the KK to STOR;;;;
-Move checked-in KKs to STOR;Job Dispatcher;functional;Logic,Data Transfer,Task;Job Dispatcher dispatches the job created by the Job Creator to a Lowpad based on available information of Lowpads;;;;
-Move checked-in KKs to STOR;Actemium Lowpad Communicator;functional;Data Transfer,Task;Lowpad Communicator communicates the Job to the Fleet Manager and communicates the Job's progress from the Fleet Manager to the Job Watcher;;;;
-Move checked-in KKs to STOR;Fleet Manager;functional;Data Transfer,Task;Fleet Manager communicates the task to the Lowpad and receives the progress from the Lowpad;;;;
-Move checked-in KKs to STOR;Job Watcher;functional;Data Transfer;Job Watcher keeps track of the job and updates the location of the relevant Lowpad and KK in the Database;;;;
-Move checked-in KKs to STOR;Real-Time Database;functional;Data Write;When task is done, Job watcher updates the location of the KK and the Lowpad in the Database;;;;
-Florisoft;Host Communicator;functional;Data Transfer;Communication between the WMS and Florisoft is done through the Host Communicator;;;;
-Host Communicator;Real-Time Database;functional;Data Write;Host Communicator writes the Florisoft data to the Database;;;;
-Real-Time Database;SF-RCVG;functional;Data Read;SF-RCVG receives client orders, KK layouts and OK/BK sticker data from the Database;;;;
-Host Communicator;Actemium Data Notifier;functional;Notification;Host Communicator send the data notification "OrderProcessed" to the Customer Allocation Management Algorithm via the Data Notifier;;;;
-Actemium Data Notifier;Customer Allocation Management Algorithm;functional;Notification;Data Notifier sends data notification "OrderProcessed" to the Customer Allocation Management Algorithm;;;;
-Real-Time Database;Customer Allocation Management Algorithm;functional;Data Read;The Customer Allocation Management Algorithm uses the data from the Database;;;;
-Customer Allocation Management Algorithm;Real-Time Database;functional;Data Write;The Customer Allocation Management Algorithm adds the calculated workload distribution to the Database;;;;
-Florisoft;Nicelabel Server;functional;Data Transfer,Task;Florisoft sends the information that should be on the WMS stickers to the Nicelabel Server;;;;
-SF-RCVG;Actemium Data Notifier;functional;Notification;SF-RCVG  notifies the Host Communicator that the WMS sticker has been scanned via the Data Notifier;;;;
-Actemium Data Notifier;Host Communicator;functional;Notification;Host Communicator receives the notification from SF-RCVG via the Data Notifier;;;;
-SF-RCVG;Real-Time Database;functional;Data Write;SF-RCVG adds LEs to the Database after the WMS sticker is scanned;;;;
-SF-RCVG;Nicelabel Server;functional;Data Transfer,Task;SF-RCVG tells Nicelabel Server what to print on the OK/BK stickers;;;;
-SF-OPBW;Real-Time Database;functional;Data Write;SF-OPBW sends location of checked-in OK from Scanner to Database and updates the location of LEs added to a KK in the Database;;;;
-Real-Time Database;Job Creator;functional;Data Read;Job Creator uses data from the Database to create jobs;;;;
-Job Creator;Job Dispatcher;functional;Data Transfer,Task;Job Creator sends the created jobs to the Job Dispatcher;;;;
-Job Dispatcher;Actemium Lowpad Communicator;functional;Data Transfer,Task;Job Dispatcher dispatches the job via the Lowpad Communicator;;;;
-Actemium Lowpad Communicator;Fleet Manager;functional;Data Transfer,Task;Lowpad Communicator communicates the job to the Fleet Manager;;;;
-Fleet Manager;Actemium Lowpad Communicator;functional;Data Transfer;Fleet Manager updates the Job Watcher on the job's progress via the Lowpad Communicator;;;;
-Actemium Lowpad Communicator;Job Watcher;functional;Data Transfer;Lowpad Communicator communicates the job's progress to the Job Watcher;;;;
-Job Watcher;Real-Time Database;functional;Data Write;Job Watcher updates the locations of Lowpads and KKs in the Database;;;;
-Job Watcher;Actemium Data Notifier;functional;Notification;Job Watcher sends data notifications "CraneJobCompleted", "CraneJobSend" and "CraneJobStatusUpdated" to update SF-OPBW about an incoming Lowpad via the Data Notifier;;;;
-Actemium Data Notifier;SF-OPBW;functional;Notification;Data Notifier sends the data notifications sent by Job Watcher to SF-OPBW;;;;
-Real-Time Database;SF-OPBW;functional;Data Read;SF-OPBW takes the sorting instructions from the Database;;;;
-SF-OPBW;Actemium Data Notifier;functional;Notification;SF-OPBW sends the data notification "KKReleased" to the Job Creator via the Data Notifier;;;;
-Actemium Data Notifier;Job Creator;functional;Notification;Data Notifier sends the data notification "KKReleased" to the Job Creator;;;;
-Real-Time Database;KK is Ready Algorithm;functional;Data Read;KK is Ready Algorithm uses data of client order, KK layout and current LEs on the KK from the Database;;;;
-KK is Ready Algorithm;Real-Time Database;functional;Data Write;KK is Ready Algorithm adds conclusion on readiness of the KK to the Database;;;;
-Host Communicator;Florisoft;functional;Data Transfer;Communication between the WMS and Florisoft is done through the Host Communicator;;;;
-Real-Time Database;Historical Database;functional;Data Write;KK is removed from Real-Time Database and moved to historical one;;;;
-Mobile Screens;WMS/WCS API & BarcodeHandler API;functional;Data Transfer;Mobile Client communicates via Mobile API;;;;
-WMS/WCS API & BarcodeHandler API;Real-Time Database;functional;Data Write;The database receives the data from the Mobile API;;;;
-Lowpads (robots);KK (OutputCart);functional;Movement;Lowpads pick up, move and drop KKs;high;4;3;12
-KK (OutputCart);OPBW Sorting Positions;functional;Alignment;KKs take up space at OPBW;low;3;2;6
-KK (OutputCart);EXCH (Output Positions / Checking System);functional;Alignment;KKs take up space at EXCH;low;3;2;6
-VK (InputCart);RCVG (Input Positions);functional;Alignment;VKs take up space at RCVG;medium;3;3;9
-OK (StorageCart);RCVG (Input Positions);functional;Alignment;OKs take up space at RCVG;low;3;2;6
-OK (StorageCart);OPBW Sorting Positions;functional;Alignment;OKs take up space at OPBW;low;3;2;6
-LE (Logistical Units BK/BG/OK/KoV);KK (OutputCart);functional;Storage;LEs are stored on KK;medium;3;3;9
-LE (Logistical Units BK/BG/OK/KoV);VK (InputCart);functional;Storage;LEs are stored on VK;medium;3;3;9
-LE (Logistical Units BK/BG/OK/KoV);OK (StorageCart);functional;Storage;LEs are stored on OK;low;3;2;6
-KK (OutputCart);LE (Logistical Units BK/BG/OK/KoV);functional;Storage;KKs contain LEs;low;3;2;6
-Sorting employee;LE (Logistical Units BK/BG/OK/KoV);functional;Movement;Sorting employee moves LEs from and to different carts;low;3;2;6
-VK (InputCart);LE (Logistical Units BK/BG/OK/KoV);functional;Storage;VKs contain LEs;low;3;2;6
-OK (StorageCart);LE (Logistical Units BK/BG/OK/KoV);functional;Storage;OKs contain LEs;medium;3;3;9
-Label Printer (RCVG);RCVG (Input Positions);functional;Position;Label printer is used to print labels at RCVG;low;2;3;6
-FingerScanner (RCVG);RCVG (Input Positions);functional;Position;FingerScanner is used to scan stickers at RCVG;low;2;2;4
-SF-RCVG Screen;RCVG (Input Positions);functional;Position;RCVG Screen is used to display instructions at RCVG;low;2;2;4
-OPBW queue;OPBW Sorting Positions;functional;Position;OPBW queue is present at OPBW;low;2;2;4
-SF-OPBW Screen;OPBW Sorting Positions;functional;Position;SF-OPBW Screen is used to display instructions at OPBW;low;2;2;4
-Label Printer (OPBW);OPBW Sorting Positions;functional;Position;Label Printer is used to print labels at OPBW;low;2;2;4
-FingerScanner (OPBW);OPBW Sorting Positions;functional;Position;FingerScanner is used to scan stickers at OPBW;low;2;3;6
-Sorting employee;FingerScanner (RCVG);functional;Scanning;Sorting employee scans stickers with FingerScanner at RCVG;low;2;3;6
-Sorting employee;FingerScanner (OPBW);functional;Scanning;Sorting employee scans stickers with FingerScanner at OPBW;low;2;3;6
-VK (InputCart);Arrival of VKs from auction;functional;Physical requirement;Truck with VKs must be available at the auction to send to magazine;;;;
-Arrival of VKs from auction;VK (InputCart);functional;Movement;VKs must be physically transfered from the auction via trucks to the magazine;;;;
-Sorting employee;Arrival of VKs from auction;functional;Physical requirement;Operator is required to unload the VK's;;;;
-Arrival of VKs from auction;Sorting employee;functional;Manual handling;Operator unloads the VK's;;;;
-RCVG (Input Positions);Arrival of VKs from auction;functional;Location;VKs need free receiving positions to be handled;;;;
-Arrival of VKs from auction;RCVG (Input Positions);functional;Use of space;Allocation of VKs at the location resulting in the use of available space for the task;;;;
-Label Printer (RCVG);Print WMS sticker;functional;Physical requirement;Printer needs to be located at RCVG in order for the process to occur;;;;
-Print WMS sticker;Label Printer (RCVG);functional;Printing, Data Transfer;Printer prints the sticker;;;;
-VK (InputCart);Scan WMS sticker;functional;Physical requirement;The VK must be present at the receiving area to be assigned a sticker;;;;
-Scan WMS sticker;RCVG (Input Positions);functional;Use of space;Check-in is done at the receiving position;;;;
-FingerScanner (RCVG);Scan WMS sticker;functional;Physical requirement;Scanner is required to read the VK sticker;;;;
-Scan WMS sticker;FingerScanner (RCVG);functional;Scanning;Scanner reads the VK sticker;;;;
-Label Printer (RCVG);Print OK/BK sticker;functional;Physical requirement;Printer is required to prints the sticker for incomming flowers;;;;
-Print OK/BK sticker;Label Printer (RCVG);functional;Printing, Data Transfer;Printer prints the sticker for incomming flowers;;;;
-VK (InputCart);Distribute OK/BK sticker and LE;functional;Physical requirement;LEs are physically taken from the VK;;;;
-Distribute OK/BK sticker and LE;LE (Logistical Units BK/BG/OK/KoV);functional;Movement;LEs are being moved by the operator;;;;
-OK (StorageCart);Distribute OK/BK sticker and LE;functional;Physical requirement;LEs are physically placed into an OK (The OK must be availbale to allocate LE's on it );;;;
-Distribute OK/BK sticker and LE;Sorting employee;functional;Manual handling;Operator performs physical LE transfer;;;;
-Sorting employee;Distribute OK/BK sticker and LE;functional;Physical requirement;Operator is required to perform physical LE transfer;;;;
-OK (StorageCart);Move OKs to OPBW;functional;Physical requirement;The OK must be availbale use them as movable storage  units;;;;
-Move OKs to OPBW;OK (StorageCart);functional;Movement;The OK must be moved physically to OPBW positions;;;;
-Sorting employee;Move OKs to OPBW;functional;Physical requirement;Operator is required to move OK to OPBW positions;;;;
-Move OKs to OPBW;Sorting employee;functional;Manual handling;Operator moves OK to OPBW positions;;;;
-OPBW Sorting Positions;Move OKs to OPBW;functional;Use of space;OKs must be placed at OPBW for sorting to begin;;;;
-KK (OutputCart);Move first KK from queue to OPBW;functional;Physical requirement;The KK must be availble to allocate products on them at OPBW sorting positions;;;;
-Move first KK from queue to OPBW;KK (OutputCart);functional;Movement;The KK is moved from OPBW queue to OPBW sorting position ;;;;
-OPBW Sorting Positions;Move first KK from queue to OPBW;functional;Location;The OPBW Sorting Position must be present as sperate space for the processes;;;;
-Move first KK from queue to OPBW;OPBW Sorting Positions;functional;Use of space;KK are moved and placed at OPBW Sorting Position for sorting to begin;;;;
-Lowpads (robots);Move first KK from queue to OPBW;functional;Physical requirement;Lowpad must be available to  transports first KK atOPBW queue to OPBW Sorting Station;;;;
-Move first KK from queue to OPBW;Lowpads (robots);functional;Data Transfer, Movement;Command is sent to lowpad to complete a task, The robot is put into motion  - Lowpad rearenger KK position in OPBW queue;;;;
-KK (OutputCart);Move KK from STOR to OPBW queue;functional;Physical requirement;The KK is required at OPBW  queue;;;;
-Move KK from STOR to OPBW queue;KK (OutputCart);functional;Movement;The KK is moved from STOR to OPBW  queue;;;;
-OPBW queue;Move KK from STOR to OPBW queue;functional;Location;Space must be availble in froont of the OPBW to from a queue;;;;
-Move KK from STOR to OPBW queue;OPBW queue;functional;Use of space;KK must be moved to the OPBW queue to avoid waiting time when the KK is being dispatched next job should be in the que ;;;;
-Lowpads (robots);Move KK from STOR to OPBW queue;functional;Physical requirement;Lowpad must be available to transports KK from STOR to OPBW queue;;;;
-Move KK from STOR to OPBW queue;Lowpads (robots);functional;Data Transfer, Movement;Command is sent to lowpad to complete a task, The robot is put into motion - Lowpad transports KK from STOR to  OPBW queue;;;;
-FingerScanner (OPBW);Scan LE in OK;functional;Physical requirement;Scanner is required to verify if correct plant is chosen for the LE;;;;
-Scan LE in OK;FingerScanner (OPBW);functional;Scanning;Scanner  verifies if correct plant is chosen for the LE;;;;
-FingerScanner (OPBW);Scan KK to confirm;functional;Physical requirement;Scanner is required to assign that the LE has been placed on the KK ;;;;
-Scan KK to confirm;FingerScanner (OPBW);functional;Scanning;Scanner assigns that the LE has been placed on the KK ;;;;
-Sorting employee;Move LE from OK to KK;functional;Physical requirement;Sorting employee is required to manually transfered  The LE is from OK to KK ;;;;
-Move LE from OK to KK;Sorting employee;functional;Manual handling;The LE is manually transfered from OK to KK by the Sorting employee;;;;
-SF-OPBW Screen;Receive sorting instructions;functional;Physical requirement;The display is required to visuzalize what the sorting employee shoudl search for;;;;
-Receive sorting instructions;SF-OPBW Screen;functional;Visualisation, Data Transfer;The display visuzalizes what the sorting employee shoudl search for;;;;
-Lowpads (robots);Move finished KK to EXCH;functional;Physical requirement;Lowpad must be available to transports KK from OPBW to EXCH;;;;
-Move finished KK to EXCH;Lowpads (robots);functional;Data Transfer, Movement;Command is sent to lowpad to complete a task, The robot is put into motion - Lowpad transports KK from OPBW to EXCH;;;;
-KK (OutputCart);Move finished KK to EXCH;functional;Physical requirement;KKs store the orders;;;;
-Move finished KK to EXCH;KK (OutputCart);functional;Movement;KKs are moved by Lowpads;;;;
-Lowpads (robots);Decouple finished KK;functional;Physical requirement;Lowpads are required to to move and Check KK out of WMS and into Florisoft;;;;
-Decouple finished KK;Lowpads (robots);functional;Data Transfer;Lowpads arrive at EXCH and Check KK out of WMS and into Florisoft;;;;
-Mobile Terminal;Decouple finished KK;functional;Physical requirement;Mobile terminal is required to decouple KK's;;;;
-Decouple finished KK;Mobile Terminal;functional;Scanning;Mobile terminal decouple KK's;;;;
-EXCH (Output Positions / Checking System);Decouple finished KK;functional;Location;Space must be availble for the final allocation of KK's before they are dispatched;;;;
-Decouple finished KK;EXCH (Output Positions / Checking System);functional;Use of space;Final storage of KK's before they are dispatched;;;;
-KK (OutputCart);Arrival of empty KKs;functional;Physical requirement;Empty KKs are expected to inbound ;;;;
-Arrival of empty KKs;KK (OutputCart);functional;Movement;Empty KKs arrive;;;;
-EXCH (Output Positions / Checking System);Arrival of empty KKs;functional;Location;Space must be availble for the final allocation of KK's before they are dispatched;;;;
-Arrival of empty KKs;EXCH (Output Positions / Checking System);functional;Use of space;Empty KKs are checked in at EXCH;;;;
-Mobile Terminal;Scan incoming KK to check it in;functional;Physical requirement;Mobile terminal is required to check KKs in;;;;
-Scan incoming KK to check it in;Mobile Terminal;functional;Data Transfer;Mobile terminal scans inbound KKs to check them in;;;;
-Lowpads (robots);Move checked-in KKs to STOR;functional;Physical requirement;Lowpad is required to move the KKs to STOR;;;;
-Move checked-in KKs to STOR;Lowpads (robots);functional;Data Transfer, Movement;Command is sent to lowpad to complete a task, The robot is put into motion -Lowpads move the KKs to STOR;;;;
-KK (OutputCart);Move checked-in KKs to STOR;functional;Physical requirement;KKs are required to transport LE's;;;;
-Move checked-in KKs to STOR;KK (OutputCart);functional;Movement;KKs are moved by Lowpads;;;;
-SF-RCVG;SF-RCVG Screen;functional;Visualisation;;;;;
-SF-OPBW;SF-OPBW Screen;functional;Visualisation;;;;;
-Host Communicator;SF-RCVG Screen;functional;Visualisation;;;;;
-WMS/WCS API & BarcodeHandler API;Mobile Terminal;functional;Visualisation;;;;;
-Fleet Manager;Lowpads (robots);functional;Task;;;;;
-Nicelabel Server;Label Printer (OPBW);functional;Task;;;;;
-Nicelabel Server;Label Printer (RCVG);functional;Task;;;;;
-KK (OutputCart);KK is Ready Algorithm;functional;Status;;;;;
-Lowpads (robots);Fleet Manager;functional;Status;;;;;
-Lowpads (robots);Actemium Lowpad Communicator;functional;Data transfer;;;;;
-Mobile Terminal;WMS/WCS API & BarcodeHandler API;functional;Data transfer;;;;;
-FingerScanner (RCVG);SF-RCVG;functional;Scanning;;;;;
-FingerScanner (OPBW);SF-OPBW;functional;Scanning;;;;;
-EXCH (Output Positions / Checking System);Host Communicator;functional;Notification;;;;;
-SF-RCVG Screen;Real-Time Database;functional;Data transfer;;;;;
-EXCH (Output Positions / Checking System);Real-Time Database;functional;Data transfer;;;;;
-SF-OPBW Screen;Real-Time Database;functional;Data transfer;;;;;
+source;target;kind;labels;motivation;I;TTD;criticality
+Receiving client orders;Decide OPBW workload distribution;functional;Start-to-Start;After +/- 80% of the order lines are received, OPBW workload distribution can start;4;4;10
+Receiving KK layout;Decide OPBW workload distribution;functional;Start-to-Start;After +/- 80% of the KK layouts are received, OPBW workload distribution can start;4;4;10
+Arrival of VKs from auction;Print WMS sticker;functional;Finish-to-Start;WMS sticker can only be printed when VK arrives;3;4;9
+Print WMS sticker;Scan WMS sticker;functional;Finish-to-Start;WMS sticker can only be scanned when printed;3;4;9
+Scan WMS sticker;Check in LE in VK to WMS system;functional;Finish-to-Start;LE's enter Actemium system when WMS sticker is scanned;4;4;10
+Check in LE in VK to WMS system;Decide OPBW workload distribution;functional;Finish-to-Start;LE's from VK need to be checked into system to print OK/BK stickers;4;4;10
+Decide OPBW workload distribution;Print OK/BK sticker;functional;Finish-to-Start;OK/BK sticker can only be printed if workload distribution is known and thus VK has arrived and its LE's are checked-in;4;4;10
+Print OK/BK sticker;Distribute OK/BK sticker and LE;functional;Finish-to-Start;OK/BK stickers need to be printed to distribute LE's from VK to OK;3;4;9
+Distribute OK/BK sticker and LE;Move OKs to OPBW;functional;Finish-to-Start;OK/BK need to be in OK to be able to move OK to OPBW;3;2;6
+Scan WMS sticker;Receiving client orders;functional;Disable;When the WMS sticker is scanned, no new client order lines can be received;1;1;2.5
+Scan WMS sticker;Receiving KK layout;functional;Disable;When the WMS sticker is scanned, no new KK layout can be received;1;1;2.5
+Move OKs to OPBW;Check-in of OK at OPBW;functional;Finish-to-Start;The OK needs to arrive at the OPBW to be checked-in;3;3;7.5
+Check-in of OK at OPBW;Move KK from STOR to OPBW queue;functional;Start-to-Start;KK is only sent when enough OKs are present at the OPBW;3;2;6
+Move KK from STOR to OPBW queue;Move first KK from queue to OPBW;functional;Start-to-Start;The first KK in line is moved to the OPBW building spot to start building;4;3;8.5
+Move first KK from queue to OPBW;Receive sorting instructions;functional;Finish-to-Start;Sorting instructions can only be received if the KK has arrived at the OPBW building spot;4;4;10
+Receive sorting instructions;Scan LE in OK;functional;Finish-to-Start;When the sorting instructions arrive, the first LE can be scanned;4;4;10
+Scan LE in OK;Move LE from OK to KK;functional;Finish-to-Start;When the LE is scanned, the LE can be moved from OK to the KK;4;4;10
+Move LE from OK to KK;Scan KK to confirm;functional;Finish-to-Start;When the LE is moved, the KK needs to be scanned to confirm;4;4;10
+Scan KK to confirm;Determine KK done at SF-OPBW;functional;Finish-to-Start;When the KK is scanned for moving the last LE, the KK is done at this OPBW and the SF-OPBW confirms this if the KK is scanned to confirm;3;3;7.5
+Determine KK done at SF-OPBW;Move (un)finished KK to STOR;functional;Finish-to-Start;When KK is done at OPBW, it is always moved to storage or other OPBW;3;2;6
+Move (un)finished KK to STOR;Determine KK ready by KK is ready algorithm;functional;Finish-to-Start;When KK is moved to STOR, Algorithm decides if KK is fully done and can go to EXCH;2;1;3.5
+Check-in of OK at OPBW;Check-out of OK at OPBW;functional;Finish-to-Start;OK needs to be checked in before it can be checked out;3;2;6
+Determine KK ready by KK is ready algorithm;Move finished KK to EXCH;functional;Finish-to-Start;When KK is determined ready, it is moved to EXCH;3;2;6
+Move finished KK to EXCH;Decouple finished KK;functional;Finish-to-Start;When KK is at EXCH, it is decoupled from the WMS;3;2;6
+Determine KK ready by KK is ready algorithm;Determine KK unready by KK is ready algorithm;functional;Finish-to-Start;When KK was ready but order is added to KK, it is again unready;2;1;3.5
+Arrival of empty KKs;Scan incoming KK to check it in;functional;Finish-to-Start;When empty KKs arrive they are manually scanned into the WMS;2;2;5
+Scan incoming KK to check it in;Move checked-in KKs to STOR;functional;Finish-to-Start;When empty KKs are scanned into WMS, job can be made to move them to STOR;2;2;5
+Distribute OK/BK sticker and LE;Handling exceptions such as big plants;functional;Start-to-Start;Exception handling can start when the distribution of LEs starts;2;3;6.5
+Decide OPBW workload distribution;Merging stations when there are less orders;functional;Start-to-Start;The workload of several stations is merged into less stations to promote efficiency;1;1;2.5
+Move LE from OK to KK;"Indikken" of OKs;functional;Finish-to-Start;"Indikken" can happen when multiple LEs have been removed from an OK;1;1;2.5
+Move LE from OK to KK;Adding LEs to a new KK when KK has insufficient space;functional;Finish-to-Start;If sizes differ or the data is wrong, not all LEs assigned to a KK might fit on the KK;3;4;9
+Receiving client orders;Florisoft;functional;Data Transfer;Florisoft sends the client orders to the system;4;4;10
+Receiving client orders;Host Communicator;functional;Data Transfer;Host Communicator receives the client data from Florisoft and sends it to the Database;4;4;10
+Receiving client orders;Real-Time Database;functional;Data Write;The Database receives the client data from Florisoft via the Host Communicator;4;4;10
+Receiving client orders;SF-RCVG;functional;Visualisation;SF-RCVG client displays the received client orders on the SF-RCVG Screen;4;2;7
+Receiving KK layout;Florisoft;functional;Data Transfer;Florisoft sends the KK layouts to the system;4;4;10
+Receiving KK layout;Host Communicator;functional;Data Transfer;Host Communicator receives the KK layouts from Florisoft and sends it to the Database;4;4;10
+Receiving KK layout;Real-Time Database;functional;Data Write;The Database receives the KK layouts from Florisoft via the Host Communicator;4;4;10
+Receiving KK layout;SF-RCVG;functional;Visualisation;SF-RCVG client displays the received KK layouts on the SF-RCVG Screen;4;2;7
+Decide OPBW workload distribution;Host Communicator;functional;Notification;Host Communicator notifies Customer Allocation Management Algorithm that an order has been processed;3;2;6
+Decide OPBW workload distribution;Actemium Data Notifier;functional;Notification;Host Communicator sends data notification "OrderProcessed" to Customer Allocation Management Algorithm via Data Notifier;2;2;5
+Decide OPBW workload distribution;Customer Allocation Management Algorithm;functional;Logic;The Customer Allocation Management Algorithm calculates the workload distribution;4;3;8.5
+Decide OPBW workload distribution;Real-Time Database;functional;Data Read,Data Write;The Customer Allocation Management Algorithm uses the data from the Database and adds the calculated workload distribution to the Database;3;4;9
+Print WMS sticker;Florisoft;functional;Data Transfer,Task;Florisoft tells the Nicelabel Server to print the WMS stickers and supplies the information that should be on them;4;4;10
+Print WMS sticker;Nicelabel Server;functional;Task;Nicelabel Server tells Label Printer to print the WMS stickers;4;4;10
+Scan WMS sticker;SF-RCVG;functional;Notification,Visualisation;SF-RCVG  notifies the Host Communicator that the WMS sticker has been scanned and shows that the WMS Sticker is scanned on the SF-RCVG Screen;3;3;7.5
+Scan WMS sticker;Actemium Data Notifier;functional;Notification;SF-RCVG sends the data notification "PartijScannedInWMS" to the Host Communicator via the Data Notifier;2;4;8
+Scan WMS sticker;Host Communicator;functional;Notification;Host Communicator receives the notification from SF-RCVG via the Data Notifier;2;4;8
+Check in LE in VK to WMS system;SF-RCVG;functional;Data Transfer,Visualisation;SF-RCVG receives the data from the WMS sticker that the Scanner scans and shows on the SF-RCVG Screen that the LE has been checked in;3;3;7.5
+Check in LE in VK to WMS system;Real-Time Database;functional;Data Write;Received data from SF-RCVG is added to the Database;3;2;6
+Print OK/BK sticker;SF-RCVG;functional;Data Transfer,Task;SF-RCVG tells the Nicelabel Server to print the OK/BK stickers and supplies the information that should be on them;4;4;10
+Print OK/BK sticker;Real-Time Database;functional;Data Read;The information that sould be on the OK/BK stickers is taken from the Database;4;4;10
+Print OK/BK sticker;Nicelabel Server;functional;Task;Nicelabel Server tells Label Printer to print the OK/BK stickers;4;4;10
+Check-in of OK at OPBW;SF-OPBW;functional;Data Transfer,Visualisation;SF-OPBW sends location of checked-in OK from Scanner to Database and shows on the SF-RCVG Screen what location at the OPBW station the OK is checked into;3;3;7.5
+Check-in of OK at OPBW;Real-Time Database;functional;Data Write;Database receives location of checked-in OK;3;3;7.5
+Move KK from STOR to OPBW queue;Real-Time Database;functional;Data Read,Data Write;Locations of LEs, OKs and KKs is taken from the Database to create the job and Job Watcher updates the location of the Lowpad and the KK in the Database;4;4;10
+Move KK from STOR to OPBW queue;Job Creator;functional;Logic,Data Transfer,Task;Job Creator creates the job based on the information from the Database;4;4;10
+Move KK from STOR to OPBW queue;Job Dispatcher;functional;Logic,Data Transfer,Task;Job Dispatcher dispatches the job created by the Job Creator to a Lowpad based on available information of Lowpads;4;4;10
+Move KK from STOR to OPBW queue;Actemium Lowpad Communicator;functional;Data Transfer,Task;Lowpad Communicator communicates the Job to the Fleet Manager and communicates the Job's progress from the Fleet Manager to the Job Watcher;4;4;10
+Move KK from STOR to OPBW queue;Fleet Manager;functional;Data Transfer,Task;Fleet Manager communicates the task to the Lowpad and receives the progress from the Lowpad;4;4;10
+Move KK from STOR to OPBW queue;Job Watcher;functional;Data Transfer,Notification;Job Watcher receives the progress of the task and sends data notifications "CraneJobCompleted", "CraneJobSend" and "CraneJobStatusUpdated" to update the system on the progress of the job;4;3;8.5
+Move KK from STOR to OPBW queue;Actemium Data Notifier;functional;Notification;Data Notifier sends the data notifications with updates on the job to the system;4;3;8.5
+Move KK from STOR to OPBW queue;SF-OPBW;functional;Notification,Visualisation;SF-OPBW receives the data notifications with updates on the job and notifies the Operator that a KK is coming to the OPBW station through the SF-OPBW Screen;4;3;8.5
+Move first KK from queue to OPBW;Job Watcher;functional;Data Transfer,Notification;Job Watcher keeps track of the job, which is a continuation of the job that sent a Lowpad to the OPBW queue, and keeps the system updated on the progress of the job using data notifications;4;4;10
+Move first KK from queue to OPBW;Actemium Lowpad Communicator;functional;Data Transfer,Task;Lowpad Communicator communicates the Job to the Fleet Manager and communicates the Job's progress from the Fleet Manager to the Job Watcher;4;4;10
+Move first KK from queue to OPBW;Fleet Manager;functional;Data Transfer,Task;Fleet Manager communicates the task to the Lowpad and receives the progress from the Lowpad;3;3;7.5
+Move first KK from queue to OPBW;Actemium Data Notifier;functional;Notification;Data Notifier sends the data notifications with updates on the job to the system;3;3;7.5
+Move first KK from queue to OPBW;SF-OPBW;functional;Notification,Visualisation;SF-OPBW receives the data notifications with updates on the job and notifies the Operator that a KK is going to the active position at the OPBW station through the SF-OPBW Screen;3;4;9
+Move first KK from queue to OPBW;Real-Time Database;functional;Data Write;Job Watcher updates the location of the Lowpad and the KK in the Database;3;3;7.5
+Receive sorting instructions;SF-OPBW;functional;Data Transfer,Visualisation;SF-OPBW takes the sorting instructions from the Database to display on the SF-OPBW Screen;4;4;10
+Receive sorting instructions;Real-Time Database;functional;Data Read;The sorting instructios are taken from the Database;4;4;10
+Scan LE in OK;SF-OPBW;functional;Data Transfer,Visualisation;Scanner sends the scanned data to the SF-OPBW client, which displays what has been scanned and how many of it should be moved to the KK;3;4;9
+Scan KK to confirm;SF-OPBW;functional;Data Transfer,Visualisation;Scanner sends the scanned data to the SF-OPBW client, which updates the displayed sorting instructions;4;3;8.5
+Scan KK to confirm;Real-Time Database;functional;Data Write;The scanned item is updated to being added to the KK in the Database;3;3;7.5
+Determine KK done at SF-OPBW;SF-OPBW;functional;Data Transfer,Notification;The Operator scans the "Afmelden KK" barcode, after which the SF-OPBW client sends the data notification "KKReleased" via the Data Notifier;3;3;7.5
+Determine KK done at SF-OPBW;Actemium Data Notifier;functional;Notification;Data Notifier sends the "KKReleased" data notification to the Job Creator;3;3;7.5
+Determine KK done at SF-OPBW;Job Creator;functional;Logic,Data Transfer,Task,Notification;Job Creator receives the "KKReleased" data notification and creates a job for the Lowpad at the active position of the OPBW station to move away;3;3;7.5
+Determine KK done at SF-OPBW;Job Dispatcher;functional;Logic,Data Transfer,Task;Job Dispatcher dispatches the job created by the Job Creator to the Lowpad at the active position of the OPBW station;4;4;10
+Determine KK done at SF-OPBW;Actemium Lowpad Communicator;functional;Data Transfer,Task;Lowpad Communicator communicates the Job to the Fleet Manager and communicates the Job's progress from the Fleet Manager to the Job Watcher;4;4;10
+Determine KK done at SF-OPBW;Fleet Manager;functional;Data Transfer,Task;Fleet Manager communicates the task to the Lowpad and receives the progress from the Lowpad;3;3;7.5
+Determine KK done at SF-OPBW;Job Watcher;functional;Data Transfer;Job Watcher keeps track of the job and updates the location of the relevant Lowpad in the Database;4;3;8.5
+Determine KK done at SF-OPBW;Real-Time Database;functional;Data Write;Location of the relevant Lowpad and KK is updated in the Database;3;2;6
+Determine KK ready by KK is ready algorithm;KK is Ready Algorithm;functional;Logic;KK is Ready Algorithm calculates if the KK released from the OPBW station is ready to go to EXCH;3;2;6
+Determine KK ready by KK is ready algorithm;Real-Time Database;functional;Data Read,Data Write;Client order, KK layout and current LEs on the KK are used from the Database and conclusion on readiness of the KK is added to the Database;2;2;5
+Determine KK unready by KK is ready algorithm;KK is Ready Algorithm;functional;Logic;KK is Ready Algorithm calculates if the KK released from the OPBW station is ready to go to EXCH;3;2;6
+Determine KK unready by KK is ready algorithm;Real-Time Database;functional;Data Read,Data Write;Client order, KK layout and current LEs on the KK are used from the Database and conclusion on readiness of the KK is added to the Database;4;4;10
+Move (un)finished KK to STOR;Real-Time Database;functional;Data Read,Data Write;The KK being unready is taken from the Database and the location of the Lowpad and the KK is updated in the Database after they have moved;3;3;7.5
+Move (un)finished KK to STOR;Job Creator;functional;Logic,Data Transfer,Task;Job Creator creates the job to move the Lowpad to STOR based on the KK's unready status;3;2;6
+Move (un)finished KK to STOR;Job Dispatcher;functional;Logic,Data Transfer,Task;Job Dispatcher dispatches the job to the Lowpad that has to move to STOR;3;2;6
+Move (un)finished KK to STOR;Actemium Lowpad Communicator;functional;Data Transfer,Task;Lowpad Communicator communicates the Job to the Fleet Manager and communicates the Job's progress from the Fleet Manager to the Job Watcher;4;4;10
+Move (un)finished KK to STOR;Fleet Manager;functional;Data Transfer,Task;Fleet Manager communicates the task to the Lowpad and receives the progress from the Lowpad;3;1;4.5
+Move (un)finished KK to STOR;Job Watcher;functional;Data Transfer;Job Watcher keeps track of the job and updates the location of the relevant Lowpad and KK in the Database;3;1;4.5
+Check-out of OK at OPBW;SF-OPBW;functional;Data Transfer,Visualisation;SF-OPBW tells Database that the OK has been checked out of the OPBW station and shows confirmation of check-out on the OPBW Screen;3;1;4.5
+Check-out of OK at OPBW;Real-Time Database;functional;Data Write;Database receives data of checked-out OK;3;3;7.5
+Move finished KK to EXCH;Real-Time Database;functional;Data Read,Data Write;The KK being ready is taken from the Database and the location of the Lowpad and the KK is updated in the Database after they have moved;3;2;6
+Move finished KK to EXCH;Job Creator;functional;Logic,Data Transfer,Task;Job Creator creates the job to move the Lowpad to EXCH based on the KK's ready status;3;2;6
+Move finished KK to EXCH;Job Dispatcher;functional;Logic,Data Transfer,Task;Job Dispatcher dispatches the job to the Lowpad that has to move to EXCH;2;4;8
+Move finished KK to EXCH;Actemium Lowpad Communicator;functional;Data Transfer,Task;Lowpad Communicator communicates the Job to the Fleet Manager and communicates the Job's progress from the Fleet Manager to the Job Watcher;2;2;5
+Move finished KK to EXCH;Fleet Manager;functional;Data Transfer,Task;Fleet Manager communicates the task to the Lowpad and receives the progress from the Lowpad;1;2;4
+Move finished KK to EXCH;Job Watcher;functional;Data Transfer;Job Watcher keeps track of the job and updates the location of the relevant Lowpad and KK in the Database;1;1;2.5
+Decouple finished KK;Fleet Manager;functional;Data Transfer;Fleet Manager communicates that Lowpad has finished the task;2;2;5
+Decouple finished KK;Actemium Lowpad Communicator;functional;Data Transfer;Lowpad communicator communicates finished task to the Job Watcher;1;2;4
+Decouple finished KK;Job Watcher;functional;Data Transfer;Job Watcher communicates finished task to the system;1;2;4
+Decouple finished KK;Host Communicator;functional;Data Transfer;Host Communicator receives finished task data and sends it to Florisoft;1;2;4
+Decouple finished KK;Florisoft;functional;Data Transfer;Florisoft receives finished KK data;2;3;6.5
+Decouple finished KK;Real-Time Database;functional;Data Write;Database updates KK's location to [EXT.OUT];2;2;5
+Decouple finished KK;Historical Database;functional;Data Write;KK is removed from Real-Time Database and moved to historical one;1;1;2.5
+Scan incoming KK to check it in;Mobile Screens;functional;Data Transfer;The "Empty container to infeed" function on the Mobile Client is used to check in a KK;3;3;7.5
+Scan incoming KK to check it in;WMS/WCS API & BarcodeHandler API;functional;Data Transfer;Mobile Client communicates checked-in KK data via Mobile API;3;3;7.5
+Scan incoming KK to check it in;Real-Time Database;functional;Data Write;The database receives the data of the checked-in KK;2;2;5
+Scan incoming KK to check it in;Host Communicator;functional;Data Transfer;The checked-in KK data is sent to the Host Communicator to check it into Florisoft;2;2;5
+Scan incoming KK to check it in;Florisoft;functional;Data Transfer;The Host Communicator communicates the checked-in KK data to Florisoft;2;2;5
+Move checked-in KKs to STOR;Job Creator;functional;Logic,Data Transfer,Task;The checked-in KK data is sent to the Job Creator, which creates a job to move the KK to STOR;3;3;7.5
+Move checked-in KKs to STOR;Job Dispatcher;functional;Logic,Data Transfer,Task;Job Dispatcher dispatches the job created by the Job Creator to a Lowpad based on available information of Lowpads;3;3;7.5
+Move checked-in KKs to STOR;Actemium Lowpad Communicator;functional;Data Transfer,Task;Lowpad Communicator communicates the Job to the Fleet Manager and communicates the Job's progress from the Fleet Manager to the Job Watcher;3;3;7.5
+Move checked-in KKs to STOR;Fleet Manager;functional;Data Transfer,Task;Fleet Manager communicates the task to the Lowpad and receives the progress from the Lowpad;2;3;6.5
+Move checked-in KKs to STOR;Job Watcher;functional;Data Transfer;Job Watcher keeps track of the job and updates the location of the relevant Lowpad and KK in the Database;3;3;7.5
+Move checked-in KKs to STOR;Real-Time Database;functional;Data Write;When task is done, Job watcher updates the location of the KK and the Lowpad in the Database;3;3;7.5
+"Indikken" of OKs;SF-OPBW;functional;Data Transfer,Visualisation;SF-OPBW updates location of LE in Database and shows confirmation that LE has been moved on the SF-OPBW Screen;1;2;4
+"Indikken" of OKs;Real-Time Database;functional;Data Write;Location of LE is updated in the Database;1;2;4
+Adding LEs to a new KK when KK has insufficient space;SF-OPBW;functional;Data Transfer,Visualisation;SF-OPBW sends request for new KK to the system and tells operator that new KK is coming via the SF-OPBW Screen;1;2;4
+Adding LEs to a new KK when KK has insufficient space;Customer Allocation Management Algorithm;functional;Logic,Data Transfer;Customer Allocation Management Algorithm calculates which KK will be assigned to the order and sent to the OPBW station;1;2;4
+Adding LEs to a new KK when KK has insufficient space;Real-Time Database;functional;Data Write;The database is updated: the KK is assigned to the order;1;2;4
+Florisoft;Host Communicator;functional;Data Transfer;Communication between the WMS and Florisoft is done through the Host Communicator;3;3;7.5
+Host Communicator;Real-Time Database;functional;Data Write;Host Communicator writes the Florisoft data to the Database;4;4;10
+Real-Time Database;SF-RCVG;functional;Data Read;SF-RCVG receives client orders, KK layouts and OK/BK sticker data from the Database;3;3;7.5
+Host Communicator;Actemium Data Notifier;functional;Notification;Host Communicator send the data notification "OrderProcessed" to the Customer Allocation Management Algorithm via the Data Notifier;2;3;6.5
+Actemium Data Notifier;Customer Allocation Management Algorithm;functional;Notification;Data Notifier sends data notification "OrderProcessed" to the Customer Allocation Management Algorithm;2;3;6.5
+Real-Time Database;Customer Allocation Management Algorithm;functional;Data Read;The Customer Allocation Management Algorithm uses the data from the Database;3;2;6
+Customer Allocation Management Algorithm;Real-Time Database;functional;Data Write;The Customer Allocation Management Algorithm adds the calculated workload distribution to the Database;3;2;6
+Florisoft;Nicelabel Server;functional;Data Transfer,Task;Florisoft sends the information that should be on the WMS stickers to the Nicelabel Server;3;3;7.5
+SF-RCVG;Actemium Data Notifier;functional;Notification;SF-RCVG  notifies the Host Communicator that the WMS sticker has been scanned via the Data Notifier;1;3;5.5
+Actemium Data Notifier;Host Communicator;functional;Notification;Host Communicator receives the notification from SF-RCVG via the Data Notifier;1;3;5.5
+SF-RCVG;Real-Time Database;functional;Data Write;SF-RCVG adds LEs to the Database after the WMS sticker is scanned;3;3;7.5
+SF-RCVG;Nicelabel Server;functional;Data Transfer,Task;SF-RCVG tells Nicelabel Server what to print on the OK/BK stickers;3;3;7.5
+SF-OPBW;Real-Time Database;functional;Data Write;SF-OPBW sends location of checked-in OK from Scanner to Database, updates the location of LEs added to a KK in the Database and tells the Database when an OK has been checked out;3;3;7.5
+Real-Time Database;Job Creator;functional;Data Read;Job Creator uses data from the Database to create jobs;4;3;8.5
+Job Creator;Job Dispatcher;functional;Data Transfer,Task;Job Creator sends the created jobs to the Job Dispatcher;4;2;7
+Job Dispatcher;Actemium Lowpad Communicator;functional;Data Transfer,Task;Job Dispatcher dispatches the job via the Lowpad Communicator;4;3;8.5
+Actemium Lowpad Communicator;Fleet Manager;functional;Data Transfer,Task;Lowpad Communicator communicates the job to the Fleet Manager;4;4;10
+Fleet Manager;Actemium Lowpad Communicator;functional;Data Transfer;Fleet Manager updates the Job Watcher on the job's progress via the Lowpad Communicator;2;3;6.5
+Actemium Lowpad Communicator;Job Watcher;functional;Data Transfer;Lowpad Communicator communicates the job's progress to the Job Watcher;2;3;6.5
+Job Watcher;Real-Time Database;functional;Data Write;Job Watcher updates the locations of Lowpads and KKs in the Database;3;2;6
+Job Watcher;Actemium Data Notifier;functional;Notification;Job Watcher sends data notifications "CraneJobCompleted", "CraneJobSend" and "CraneJobStatusUpdated" to update SF-OPBW about an incoming Lowpad via the Data Notifier;2;3;6.5
+Actemium Data Notifier;SF-OPBW;functional;Notification;Data Notifier sends the data notifications sent by Job Watcher to SF-OPBW;2;3;6.5
+Real-Time Database;SF-OPBW;functional;Data Read;SF-OPBW takes the sorting instructions from the Database;3;3;7.5
+SF-OPBW;Actemium Data Notifier;functional;Notification;SF-OPBW sends the data notification "KKReleased" to the Job Creator via the Data Notifier;1;3;5.5
+Actemium Data Notifier;Job Creator;functional;Notification;Data Notifier sends the data notification "KKReleased" to the Job Creator;2;3;6.5
+Real-Time Database;KK is Ready Algorithm;functional;Data Read;KK is Ready Algorithm uses data of client order, KK layout and current LEs on the KK from the Database;2;1;3.5
+KK is Ready Algorithm;Real-Time Database;functional;Data Write;KK is Ready Algorithm adds conclusion on readiness of the KK to the Database;2;1;3.5
+Host Communicator;Florisoft;functional;Data Transfer;Communication between the WMS and Florisoft is done through the Host Communicator;3;3;7.5
+Real-Time Database;Historical Database;functional;Data Write;KK is removed from Real-Time Database and moved to historical one;1;1;2.5
+Mobile Screens;WMS/WCS API & BarcodeHandler API;functional;Data Transfer;Mobile Client communicates via Mobile API;2;1;3.5
+WMS/WCS API & BarcodeHandler API;Real-Time Database;functional;Data Write;The database receives the data from the Mobile API;2;2;5
+SF-OPBW;Customer Allocation Management Algorithm;functional;Data Transfer;SF-OPBW sends request for new KK to the Algorithm when a KK has insufficient space;3;2;6
+Lowpads (robots);KK (OutputCart);functional;Movement;Lowpads pick up, move and drop KKs;4;4;10
+KK (OutputCart);OPBW Sorting Positions;functional;Alignment;KKs take up space at OPBW;1;1;2.5
+KK (OutputCart);EXCH (Output Positions / Checking System);functional;Alignment;KKs take up space at EXCH;1;1;2.5
+VK (InputCart);RCVG (Input Positions);functional;Alignment;VKs take up space at RCVG;1;1;2.5
+OK (StorageCart);RCVG (Input Positions);functional;Alignment;OKs take up space at RCVG;1;1;2.5
+OK (StorageCart);OPBW Sorting Positions;functional;Alignment;OKs take up space at OPBW;1;1;2.5
+LE (Logistical Units BK/BG/OK/KoV);KK (OutputCart);functional;Storage;LEs are stored on KK;3;4;9
+LE (Logistical Units BK/BG/OK/KoV);VK (InputCart);functional;Storage;LEs are stored on VK;1;2;4
+LE (Logistical Units BK/BG/OK/KoV);OK (StorageCart);functional;Storage;LEs are stored on OK;2;1;3.5
+KK (OutputCart);LE (Logistical Units BK/BG/OK/KoV);functional;Storage;KKs contain LEs;4;4;10
+Sorting employee;LE (Logistical Units BK/BG/OK/KoV);functional;Movement;Sorting employee moves LEs from and to different carts;4;3;8.5
+VK (InputCart);LE (Logistical Units BK/BG/OK/KoV);functional;Storage;VKs contain LEs;3;3;7.5
+OK (StorageCart);LE (Logistical Units BK/BG/OK/KoV);functional;Storage;OKs contain LEs;3;3;7.5
+Label Printer (RCVG);RCVG (Input Positions);functional;Position;Label printer is used to print labels at RCVG;4;4;10
+FingerScanner (RCVG);RCVG (Input Positions);functional;Position;FingerScanner is used to scan stickers at RCVG;4;4;10
+SF-RCVG Screen;RCVG (Input Positions);functional;Position;RCVG Screen is used to display instructions at RCVG;3;3;7.5
+OPBW queue;OPBW Sorting Positions;functional;Position;OPBW queue is present at OPBW;1;1;2.5
+SF-OPBW Screen;OPBW Sorting Positions;functional;Position;SF-OPBW Screen is used to display instructions at OPBW;3;3;7.5
+Label Printer (OPBW);OPBW Sorting Positions;functional;Position;Label Printer is used to print labels at OPBW;4;4;10
+FingerScanner (OPBW);OPBW Sorting Positions;functional;Position;FingerScanner is used to scan stickers at OPBW;4;4;10
+Sorting employee;FingerScanner (RCVG);functional;Scanning;Sorting employee scans stickers with FingerScanner at RCVG;4;4;10
+Sorting employee;FingerScanner (OPBW);functional;Scanning;Sorting employee scans stickers with FingerScanner at OPBW;4;4;10
+VK (InputCart);Arrival of VKs from auction;functional;Physical requirement;Truck with VKs must be available at the auction to send to magazine ;3;2;6
+Arrival of VKs from auction;VK (InputCart);functional;Movement;VKs must be physically transfered from the auction via trucks to the magazine;3;2;6
+Sorting employee;Arrival of VKs from auction;functional;Physical requirement;Operator is required to unload the VK's;3;3;7.5
+Arrival of VKs from auction;Sorting employee;functional;Manual handling;Operator unloads the VK's;3;3;7.5
+RCVG (Input Positions);Arrival of VKs from auction;functional;Location;VKs need free receiving positions to be handled;1;1;2.5
+Arrival of VKs from auction;RCVG (Input Positions);functional;Use of space;Allocation of VKs at the location resulting in the use of available space for the task;1;1;2.5
+Label Printer (RCVG);Print WMS sticker;functional;Physical requirement;Printer needs to be located at RCVG in order for the process to occur;4;4;10
+Print WMS sticker;Label Printer (RCVG);functional;Printing, Data Transfer;Printer prints the sticker;4;4;10
+VK (InputCart);Scan WMS sticker;functional;Physical requirement;The VK must be present at the receiving area to be assigned a sticker;4;4;10
+Scan WMS sticker;RCVG (Input Positions);functional;Use of space;Check-in is done at the receiving position;1;1;2.5
+FingerScanner (RCVG);Scan WMS sticker;functional;Physical requirement;Scanner is required to read the VK sticker;4;4;10
+Scan WMS sticker;FingerScanner (RCVG);functional;Scanning;Scanner reads the VK sticker;4;4;10
+Label Printer (RCVG);Print OK/BK sticker;functional;Physical requirement;Printer is required to prints the sticker for incomming flowers;4;4;10
+Print OK/BK sticker;Label Printer (RCVG);functional;Printing, Data Transfer;Printer prints the sticker for incomming flowers;4;4;10
+VK (InputCart);Distribute OK/BK sticker and LE;functional;Physical requirement;LEs are physically taken from the VK;3;3;7.5
+Distribute OK/BK sticker and LE;LE (Logistical Units BK/BG/OK/KoV);functional;Movement;LEs are being moved by the operator;3;3;7.5
+OK (StorageCart);Distribute OK/BK sticker and LE;functional;Physical requirement;LEs are physically placed into an OK (The OK must be availbale to allocate LE's on it );2;2;5
+Distribute OK/BK sticker and LE;Sorting employee;functional;Manual handling;Operator performs physical LE transfer;3;3;7.5
+Sorting employee;Distribute OK/BK sticker and LE;functional;Physical requirement;Operator is required to perform physical LE transfer;3;3;7.5
+OK (StorageCart);Move OKs to OPBW;functional;Physical requirement;The OK must be availbale use them as movable storage  units;2;2;5
+Move OKs to OPBW;OK (StorageCart);functional;Movement;The OK must be moved physically to OPBW positions;2;2;5
+Sorting employee;Move OKs to OPBW;functional;Physical requirement;Operator is required to move OK to OPBW positions;2;2;5
+Move OKs to OPBW;Sorting employee;functional;Manual handling;Operator moves OK to OPBW positions;2;2;5
+OPBW Sorting Positions;Move OKs to OPBW;functional;Use of space;OKs must be placed at OPBW for sorting to begin;1;1;2.5
+KK (OutputCart);Move first KK from queue to OPBW;functional;Physical requirement;The KK must be availble to allocate products on them at OPBW sorting positions;3;3;7.5
+Move first KK from queue to OPBW;KK (OutputCart);functional;Movement;The KK is moved from OPBW queue to OPBW sorting position ;3;3;7.5
+OPBW Sorting Positions;Move first KK from queue to OPBW;functional;Location;The OPBW Sorting Position must be present as sperate space for the processes;1;1;2.5
+Move first KK from queue to OPBW;OPBW Sorting Positions;functional;Use of space;KK are moved and placed at OPBW Sorting Position for sorting to begin;1;1;2.5
+Lowpads (robots);Move first KK from queue to OPBW;functional;Physical requirement;Lowpad must be available to  transports first KK atOPBW queue to OPBW Sorting Station;4;4;10
+Move first KK from queue to OPBW;Lowpads (robots);functional;Data Transfer, Movement;Command is sent to lowpad to complete a task, The robot is put into motion  - Lowpad rearenger KK position in OPBW queue;4;4;10
+KK (OutputCart);Move KK from STOR to OPBW queue;functional;Physical requirement;The KK is required at OPBW  queue;3;2;6
+Move KK from STOR to OPBW queue;KK (OutputCart);functional;Movement;The KK is moved from STOR to OPBW  queue;3;2;6
+OPBW queue;Move KK from STOR to OPBW queue;functional;Location;Space must be availble in froont of the OPBW to from a queue;1;1;2.5
+Move KK from STOR to OPBW queue;OPBW queue;functional;Use of space;KK must be moved to the OPBW queue to avoid waiting time when the KK is being dispatched next job should be in the que ;1;1;2.5
+Lowpads (robots);Move KK from STOR to OPBW queue;functional;Physical requirement;Lowpad must be available to transports KK from STOR to OPBW queue;4;4;10
+Move KK from STOR to OPBW queue;Lowpads (robots);functional;Data Transfer, Movement;Command is sent to lowpad to complete a task, The robot is put into motion - Lowpad transports KK from STOR to  OPBW queue;4;4;10
+FingerScanner (OPBW);Scan LE in OK;functional;Physical requirement;Scanner is required to verify if correct plant is chosen for the LE;4;4;10
+Scan LE in OK;FingerScanner (OPBW);functional;Scanning;Scanner  verifies if correct plant is chosen for the LE;4;4;10
+FingerScanner (OPBW);Scan KK to confirm;functional;Physical requirement;Scanner is required to assign that the LE has been placed on the KK ;4;4;10
+Scan KK to confirm;FingerScanner (OPBW);functional;Scanning;Scanner assigns that the LE has been placed on the KK ;4;4;10
+Sorting employee;Move LE from OK to KK;functional;Physical requirement;Sorting employee is required to manually transfered  The LE is from OK to KK ;4;4;10
+Move LE from OK to KK;Sorting employee;functional;Manual handling;The LE is manually transfered from OK to KK by the Sorting employee;4;4;10
+SF-OPBW Screen;Receive sorting instructions;functional;Physical requirement;The display is required to visuzalize what the sorting employee shoudl search for;3;3;7.5
+Receive sorting instructions;SF-OPBW Screen;functional;Visualisation, Data Transfer;The display visuzalizes what the sorting employee shoudl search for;3;3;7.5
+Lowpads (robots);Move finished KK to EXCH;functional;Physical requirement;Lowpad must be available to transports KK from OPBW to EXCH;4;3;8.5
+Move finished KK to EXCH;Lowpads (robots);functional;Data Transfer, Movement;Command is sent to lowpad to complete a task, The robot is put into motion - Lowpad transports KK from OPBW to EXCH;4;3;8.5
+KK (OutputCart);Move finished KK to EXCH;functional;Physical requirement;KKs store the orders;3;3;7.5
+Move finished KK to EXCH;KK (OutputCart);functional;Movement;KKs are moved by Lowpads;3;3;7.5
+Lowpads (robots);Decouple finished KK;functional;Physical requirement;Lowpads are required to to move and Check KK out of WMS and into Florisoft;3;3;7.5
+Decouple finished KK;Lowpads (robots);functional;Data Transfer;Lowpads arrive at EXCH and Check KK out of WMS and into Florisoft;3;3;7.5
+Mobile Terminal;Decouple finished KK;functional;Physical requirement;Mobile terminal is required to decouple KK's;4;4;10
+Decouple finished KK;Mobile Terminal;functional;Scanning;Mobile terminal decouple KK's;4;4;10
+EXCH (Output Positions / Checking System);Decouple finished KK;functional;Location;Space must be availble for the final allocation of KK's before they are dispatched;1;1;2.5
+Decouple finished KK;EXCH (Output Positions / Checking System);functional;Use of space;Final storage of KK's before they are dispatched;1;1;2.5
+KK (OutputCart);Arrival of empty KKs;functional;Physical requirement;Empty KKs are expected to inbound ;3;2;6
+Arrival of empty KKs;KK (OutputCart);functional;Movement;Empty KKs arrive;3;2;6
+EXCH (Output Positions / Checking System);Arrival of empty KKs;functional;Location;Space must be availble for the final allocation of KK's before they are dispatched;1;1;2.5
+Arrival of empty KKs;EXCH (Output Positions / Checking System);functional;Use of space;Empty KKs are checked in at EXCH;1;1;2.5
+Mobile Terminal;Scan incoming KK to check it in;functional;Physical requirement;Mobile terminal is required to check KKs in;4;4;10
+Scan incoming KK to check it in;Mobile Terminal;functional;Data Transfer;Mobile terminal scans inbound KKs to check them in;4;4;10
+Lowpads (robots);Move checked-in KKs to STOR;functional;Physical requirement;Lowpad is required to move the KKs to STOR;3;2;6
+Move checked-in KKs to STOR;Lowpads (robots);functional;Data Transfer, Movement;Command is sent to lowpad to complete a task, The robot is put into motion -Lowpads move the KKs to STOR;3;2;6
+KK (OutputCart);Move checked-in KKs to STOR;functional;Physical requirement;KKs are required to transport LE's;2;2;5
+Move checked-in KKs to STOR;KK (OutputCart);functional;Movement;KKs are moved by Lowpads;2;2;5
+SF-RCVG;SF-RCVG Screen;functional;Visualisation;Screens at RCVG need software module to display data;3;3;7.5
+SF-OPBW;SF-OPBW Screen;functional;Visualisation;Screens at OPBW need software module to display data;3;3;7.5
+Host Communicator;SF-RCVG Screen;functional;Visualisation;Screens at RCVG need data from Host to show what to check-in;3;3;7.5
+WMS/WCS API & BarcodeHandler API;Mobile Terminal;functional;Visualisation;API needs terminal to get data changes;4;4;10
+Fleet Manager;Lowpads (robots);functional;Task;fleet manager needs robots to distribute tasks;4;4;10
+Nicelabel Server;Label Printer (OPBW);functional;Task;server needs printer to physically print labels;4;4;10
+Nicelabel Server;Label Printer (RCVG);functional;Task;server needs printer to physically print labels;4;4;10
+KK (OutputCart);KK is Ready Algorithm;functional;Status;KK is needed for algorithm to determine if it is ready;2;1;3.5
+Lowpads (robots);Fleet Manager;functional;Status;Lowpads are needed for the fleet manager to delegate tasks;4;3;8.5
+Lowpads (robots);Actemium Lowpad Communicator;functional;Data transfer;Lowpads are needed for the communicator to distribute data from lowpads;4;3;8.5
+Mobile Terminal;WMS/WCS API & BarcodeHandler API;functional;Data transfer;Terminal is needed for API to get datae;4;4;10
+FingerScanner (RCVG);SF-RCVG;functional;Scanning;Scanner is needed to operate SF screen;4;4;10
+FingerScanner (OPBW);SF-OPBW;functional;Scanning;Scanner is needed to operate SF screen;4;4;10
+EXCH (Output Positions / Checking System);Host Communicator;functional;Notification;EXCH postiion is needed to update orders in host ;3;3;7.5
+SF-RCVG Screen;SF-RCVG;functional;Data transfer;Screen is needed to update the System behind the screen;3;3;7.5
+EXCH (Output Positions / Checking System);Real-Time Database;functional;Data transfer;EXCH is needed to update the database for checking out carts;3;3;7.5
+SF-OPBW Screen;SF-OPBW;functional;Data transfer;Screen is needed to update the System behind the screen;3;3;7.5
