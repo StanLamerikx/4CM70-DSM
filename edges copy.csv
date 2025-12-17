@@ -163,7 +163,7 @@ Label Printer (OPBW);OPBW Sorting Positions;functional;Position;Label Printer is
 FingerScanner (OPBW);OPBW Sorting Positions;functional;Position;FingerScanner is used to scan stickers at OPBW;low;2;3;6
 Sorting employee;FingerScanner (RCVG);functional;Scanning;Sorting employee scans stickers with FingerScanner at RCVG;low;2;3;6
 Sorting employee;FingerScanner (OPBW);functional;Scanning;Sorting employee scans stickers with FingerScanner at OPBW;low;2;3;6
-VK (InputCart);Arrival of VKs from auction;functional;Physical requirement;Truck with VKs must be available at the auction to send to magazine;;;;
+VK (InputCart);Arrival of VKs from auction;functional;Physical requirement;Truck with VKs must be available at the auction to send to magazine ;;;;
 Arrival of VKs from auction;VK (InputCart);functional;Movement;VKs must be physically transfered from the auction via trucks to the magazine;;;;
 Sorting employee;Arrival of VKs from auction;functional;Physical requirement;Operator is required to unload the VK's;;;;
 Arrival of VKs from auction;Sorting employee;functional;Manual handling;Operator unloads the VK's;;;;
@@ -177,6 +177,8 @@ FingerScanner (RCVG);Scan WMS sticker;functional;Physical requirement;Scanner is
 Scan WMS sticker;FingerScanner (RCVG);functional;Scanning;Scanner reads the VK sticker;;;;
 Label Printer (RCVG);Print OK/BK sticker;functional;Physical requirement;Printer is required to prints the sticker for incomming flowers;;;;
 Print OK/BK sticker;Label Printer (RCVG);functional;Printing, Data Transfer;Printer prints the sticker for incomming flowers;;;;
+FingerScanner (RCVG);Distribute OK/BK sticker and LE;functional;Physical requirement;Scanner is required to read The WMS sticker ;;;;
+Distribute OK/BK sticker and LE;FingerScanner (RCVG);functional;Scanning;The WMS sticker is scanned;;;;
 VK (InputCart);Distribute OK/BK sticker and LE;functional;Physical requirement;LEs are physically taken from the VK;;;;
 Distribute OK/BK sticker and LE;LE (Logistical Units BK/BG/OK/KoV);functional;Movement;LEs are being moved by the operator;;;;
 OK (StorageCart);Distribute OK/BK sticker and LE;functional;Physical requirement;LEs are physically placed into an OK (The OK must be availbale to allocate LE's on it );;;;
@@ -199,10 +201,10 @@ OPBW queue;Move KK from STOR to OPBW queue;functional;Location;Space must be ava
 Move KK from STOR to OPBW queue;OPBW queue;functional;Use of space;KK must be moved to the OPBW queue to avoid waiting time when the KK is being dispatched next job should be in the que ;;;;
 Lowpads (robots);Move KK from STOR to OPBW queue;functional;Physical requirement;Lowpad must be available to transports KK from STOR to OPBW queue;;;;
 Move KK from STOR to OPBW queue;Lowpads (robots);functional;Data Transfer, Movement;Command is sent to lowpad to complete a task, The robot is put into motion - Lowpad transports KK from STOR to  OPBW queue;;;;
-FingerScanner (OPBW);Scan LE in OK;functional;Physical requirement;Scanner is required to verify if correct plant is chosen for the LE;;;;
-Scan LE in OK;FingerScanner (OPBW);functional;Scanning;Scanner  verifies if correct plant is chosen for the LE;;;;
-FingerScanner (OPBW);Scan KK to confirm;functional;Physical requirement;Scanner is required to assign that the LE has been placed on the KK ;;;;
-Scan KK to confirm;FingerScanner (OPBW);functional;Scanning;Scanner assigns that the LE has been placed on the KK ;;;;
+FingerScanner (RCVG);Scan LE in OK;functional;Physical requirement;Scanner is required to verify if correct plant is chosen for the LE;;;;
+Scan LE in OK;FingerScanner (RCVG);functional;Scanning;Scanner  verifies if correct plant is chosen for the LE;;;;
+FingerScanner (RCVG);Scan KK to confirm;functional;Physical requirement;Scanner is required to assign that the LE has been placed on the KK ;;;;
+Scan KK to confirm;FingerScanner (RCVG);functional;Scanning;Scanner assigns that the LE has been placed on the KK ;;;;
 Sorting employee;Move LE from OK to KK;functional;Physical requirement;Sorting employee is required to manually transfered  The LE is from OK to KK ;;;;
 Move LE from OK to KK;Sorting employee;functional;Manual handling;The LE is manually transfered from OK to KK by the Sorting employee;;;;
 SF-OPBW Screen;Receive sorting instructions;functional;Physical requirement;The display is required to visuzalize what the sorting employee shoudl search for;;;;
